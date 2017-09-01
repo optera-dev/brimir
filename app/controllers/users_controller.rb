@@ -16,7 +16,6 @@
 
 class UsersController < ApplicationController
   include UsersStrongParams
-
   load_and_authorize_resource :user
 
   def edit
@@ -63,7 +62,6 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      user_welcome_mailer
       redirect_to users_url, notice: I18n.translate(:user_added)
     else
       render 'new'
@@ -74,15 +72,5 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     redirect_to users_url, notice: I18n.translate(:user_removed)
-  end
-
-  protected
-
-  def user_welcome_mailer
-    template = EmailTemplate.by_kind('user_welcome').active.first
-    tenant = Tenant.current_tenant
-    if !template.nil?
-      NotificationMailer.new_account(@user, template, tenant).deliver_now
-    end
   end
 end

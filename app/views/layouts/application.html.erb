@@ -6,9 +6,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= content_for?(:title) ? yield(:title) : 'Brimir' %></title>
-
-    <%= favicon_link_tag 'favicon.png' %>
+    <title><%= content_for?(:title) ? yield(:title) : 'AceleraDesk' %></title>
+    <%= favicon_link_tag 'favicon.ico' %>
     <%= stylesheet_link_tag '//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,600italic' %>
 
     <% if @rtl %>
@@ -18,15 +17,11 @@
     <% end %>
 
     <%= stylesheet_link_tag 'application-print', media: 'print' %>
-    <% if Tenant.current_tenant.stylesheet_url? %>
-      <%= stylesheet_link_tag Tenant.current_tenant.stylesheet_url %>
-    <% end %>
-
     <%= javascript_include_tag 'vendor/modernizr' %>
     <%= csrf_meta_tags %>
   </head>
 
-  <body style="<%= 'direction:rtl;' if [:ar].include?(I18n.locale)%> <%= 'background: #30363e' if user_signed_in? %>">
+  <body style="<%= 'direction:rtl;' if [:ar].include?(I18n.locale)%> <%= 'background: #d7e8f2'%>">
 
     <% if user_signed_in? %>
       <nav class="top-bar" data-topbar>
@@ -37,7 +32,9 @@
             </li>
           <% end %>
           <li class="name">
-            <h1><a href="<%= root_path %>">BRIMIR</a></h1>
+            <h1><a href="<%= root_path %>">
+              <%= image_tag("logo_2.png", :alt => "AceleraDesk") %>
+            </a></h1>
           </li>
           <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
         </ul>
@@ -48,36 +45,26 @@
             <div class="show-for-small-only">
               <%= render 'inbox_menu' %>
             </div>
-            <% if can? :index, EmailTemplate %>
-              <li class="hide-for-small-only"><a href="<%= email_templates_path %>"><i class="fa fa-file fa-fw"></i></a></li>
-            <% end %>
+                       
             <% if can? :index, EmailAddress %>
-              <li class="hide-for-small-only"><a href="<%= email_addresses_path %>"><i class="fa fa-envelope fa-fw"></i></a></li>
+              <li class="hide-for-small-only" title="Configuração de Email"><a href="<%= email_addresses_path %>"><i class="fa fa-envelope fa-fw"></i></a></li>
             <% end %>
             <% if can? :index, Rule %>
-              <li id="joyride-rules" class="hide-for-small-only"><a href="<%= rules_path %>"><i class="fa fa-random fa-fw"></i></a></li>
+              <li id="joyride-rules" class="hide-for-small-only" title="Cadastro de Regras"><a href="<%= rules_path %>"><i class="fa fa-random fa-fw"></i></a></li>
             <% end %>
             <% if can? :index, User %>
-              <li id="joyride-users" class="hide-for-small-only"><a href="<%= users_path %>"><i class="fa fa-users fa-fw"></i></a></li>
+              <li id="joyride-users" class="hide-for-small-only" title="Cadastro de Usuários"><a href="<%= users_path %>"><i class="fa fa-users fa-fw"></i></a></li>
             <% end %>
             <% if can? :update, Tenant.current_tenant %>
-              <li class="hide-for-small-only"><a href="<%= edit_settings_path %>"><i class="fa fa-wrench fa-fw"></i></a></li>
+              <li class="hide-for-small-only" title="Configurações"><a href="<%= edit_settings_path %>"><i class="fa fa-wrench fa-fw"></i></a></li>
             <% end %>
-            <li class="has-dropdown" id="joyride-settings">
-              <a href="#"><%= user_avatar current_user, class: 'avatar mrm', size: 20 %><%= current_user.email %></a>
-              <ul class="dropdown">
-                <li>
-                  <%= link_to edit_user_path(current_user) do %>
-                    <i class="fa-cogs fa fa-fw"></i> <%= t(:personal_settings) %>
-                  <% end %>
-                </li>
-                <li>
-                  <%= link_to destroy_user_session_path, method: :delete do %>
-                    <i class="fa-sign-out fa fa-fw"></i> <%= t(:sign_out) %>
-                  <% end %>
-                </li>
-              </ul>
-            </li>
+            <% if can? :index, User %>
+              <li class="hide-for-small-only" title="Editar Conta"><a href="<%= edit_user_path(current_user) %>"><i class="fa fa-cogs fa-fw"></i></a></li>
+            <% end %> 
+            <li class="hide-for-small-only" title="Sair">           
+              <%= link_to destroy_user_session_path, method: :delete do %><i class="fa fa-sign-out"></i></li>
+            <% end %>    
+
           </ul>
         </section>
       </nav>
@@ -127,7 +114,9 @@
 
     <%= javascript_include_tag 'application' %>
 
-    <% if user_signed_in? && @show_joyride %>
+    <% if user_signed_in? && current_user.agent? && current_user.sign_in_count == 1 %>
+      <% current_user.sign_in_count += 1 %>
+      <% current_user.save %>
       <ol class="joyride-list" data-joyride data-options="expose: true;scroll_speed: 1000;">
         <li data-id="joyride-tickets" data-text="<%= t('joyride.next') %>" data-options="prev_button: false; tip_location: top;">
           <h4><%= t(:new_ticket) %></h4>

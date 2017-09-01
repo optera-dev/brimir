@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # labels attached via labelings to users or tickets
-class Label < ApplicationRecord
+class Label < ActiveRecord::Base
   has_many :labelings, dependent: :destroy
   has_many :users, through: :labelings, source: :labelable, source_type: 'User'
 
