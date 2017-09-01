@@ -1,106 +1,94 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.0.0'
+gem 'rails', '~> 4.2.0'
 
-gem 'sass-rails', "~> 5.0.0"
-gem 'coffee-rails', "~> 4.2.0"
+gem 'sass-rails', '~> 5.0.0'
+gem 'coffee-rails', '~> 4.1.0'
 
-gem 'uglifier', "~> 3.0.0"
+gem 'uglifier', '>= 1.0.3'
 
-gem 'compass-rails', '~> 3.0.0'
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+gem 'therubyracer', platforms: :ruby
+
+gem 'compass-rails', '~> 2.0.0'
 gem 'foundation-rails', '~> 5.5.0'
 
-gem 'jquery-rails', "~> 4.2"
-gem 'jquery-visibility-rails'
+gem 'puma'
+gem 'aws-sdk'
+gem 'aws-sdk-rails'
+
+gem 'jquery-rails'
 
 # foundation form errors
-gem 'foundation_rails_helper', "~> 2.0"
+gem 'foundation_rails_helper'
 
 # to use debugger
-gem 'byebug', "~> 9.0", group: [:development, :test]
-gem 'pry', "~> 0.10", group: [:development, :test]
-
-# We need this to not break the test suite as `assigns` and `assert_template` have been remove and extracted to a gem in Rails 5
-gem 'rails-controller-testing', group: [:test]
-
+gem 'byebug', group: [:development, :test]
+gem 'pry', group: [:development, :test]
 
 group :development do
   # Spring application pre-loader
-  gem 'spring', "~> 2.0"
+  gem 'spring'
 
   # open sent emails in the browser
-  gem 'letter_opener', "~> 1.4"
+  gem 'letter_opener'
 end
 
 group :test do
   # for travis-ci
-  gem 'rake', "~> 12.0"
+  gem 'rake'
 
   # for coveralls
-  gem 'coveralls', "~> 0.8"
-
-  gem 'timecop', "~> 0.8"
+  gem 'coveralls'
 end
 
 # Optional PostgreSQL for production
-gem 'pg', "~> 0.19", group: :postgresql
+#gem 'pg', group: :postgresql
 # Optional MySQL for production
-gem 'mysql2', "~> 0.4", group: :mysql
+gem 'mysql2', group: :mysql
 # Optional SQLite for development
-gem 'sqlite3', "~> 1.3", group: :sqlite
+#gem 'sqlite3', group: :sqlite
 
 # authentication
-gem 'devise', "~> 4.2"
-gem 'devise_ldap_authenticatable', "~> 0.8"
-
-# mail see https://github.com/mikel/mail/issues/912
-gem 'mail'
+gem 'devise'
+gem 'devise_ldap_authenticatable'
 
 # omniauth
-gem 'omniauth-google-oauth2', "~> 0.4"
+gem 'omniauth-google-oauth2'
 
 # authorization
-gem 'cancancan', "~> 1.15"
+gem 'cancancan'
 
 # pagination
-gem 'will_paginate', "~> 3.1"
+gem 'will_paginate'
 
 # attachments, thumbnails etc
-gem 'paperclip', "~> 5.1"
+gem 'paperclip'
 
 # select2 replacement for selectboxes
 gem 'select2-rails', '~> 3.5' # newer breaks Foundation Reveal on tickets#show
 
 gem 'font-awesome-rails', '~> 4.0'
 
+# TinyMCE 4 for WYSIWYG in textareas
+gem 'tinymce-rails'
+
 # for language detection
-gem 'http_accept_language', "~> 2.1"
+gem 'http_accept_language'
 
 # internationalisation
-gem 'rails-i18n', "~> 5.0"
-gem 'devise-i18n', "~> 1.1"
+#gem 'rails-i18n'
+gem 'rails-i18n', '~> 4.0.0' # For 4.0.x
+gem 'devise-i18n'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.6'
+gem 'jbuilder', '~> 2.2'
+
+# time traveling
+gem 'timecop'
 
 # fancybox for showing image in lightbox
-gem 'fancybox2-rails', "~> 0.2"
+gem 'fancybox2-rails', '~> 0.2.8'
 
 # gravatar for user avatar images
-gem 'gravatar_image_tag', "~> 1.2"
-
-# Captcha for brimir
-gem 'recaptcha', "~> 4.0", require: 'recaptcha/rails'
-
-# Trix WYSIWYG editor
-gem 'trix', "~> 0.10", ">= 0.10.1"
-
-# React support
-gem 'react-rails', "~> 1.10"
-
-# Capistrano for deployment
-group :development do
-  gem 'capistrano', '~> 3.8'
-  gem 'capistrano-rails', require: false
-  gem 'capistrano-bundler', require: false
-end
+gem 'gravatar_image_tag'

@@ -2,10 +2,10 @@
 	border-bottom: 1px solid $light;
 
 	.title-area{
-		background-color: $body-font-color;
+		background-color: $back-ground;
 		text-align: center;
 
-		.name {
+		.name1 {
 			h1{
 				a{
 					font-size: 22px;
@@ -38,7 +38,7 @@
 			background: transparent;
 
 			a:not(.button){
-				color: $body-font-color;
+				color: $secondary-color;
 				background: transparent;
 				&:after{
 					border-color: $body-font-color transparent transparent transparent;

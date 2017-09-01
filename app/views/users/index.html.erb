@@ -12,7 +12,7 @@
 
               <%= link_to new_user_path, class: 'radius tiny button right mlm no-m' do %>
                 <i class="fa fa-plus" style="top:1px"></i>
-              <% end %>
+              <% end %>           
 
               <div class="small-2 columns right">
                 <%= button_tag '<i class="fa fa-search"></i>'.html_safe, type: 'submit', class: 'secondary radius no-bl no-m button postfix' %>
@@ -43,7 +43,7 @@
     <% @users.each do |user| %>
       <tr>
         <td>
-          <%= user_avatar user, class: 'avatar' %>
+          <%#<%= user_avatar user, class: 'avatar' %>
           <%= link_to user.email, edit_user_path(user) %>
         </td>
         <td><%= (user.agent?) ? t(:agent) : t(:customer) %></td>
