@@ -1,3 +1,11 @@
+<div class="jumbotron">
+  <h1>Hello, world!</h1>
+  <p>...</p>
+  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+</div>
+
+Teste de Envio de Email!
+
 <% unless @user.current_sign_in_at.blank? %>
   <p>
     <a href="<%= ticket_url(@reply.ticket) %>#reply-<%= @reply.id %>" target="_blank">
@@ -6,12 +14,14 @@
   </p>
 <% end %>
 
+<footer class="footer">
+  <div class="container">
+    <span class="text-muted">Place sticky footer content here.</span>
+  </div>
+</footer>
+
 <% if @reply.content_type == 'html' %>
-  <% if @reply.is_a? SystemReply %>
-    <%= render('/shared/content_for_system_reply', reply: @reply) %>
-  <% else %>
-    <%= sanitize_html(@reply.content) %>
-  <% end %>
+  <%= sanitize_html(@reply.content) %>
 <% else %>
   <pre><%= word_wrap(@reply.content, line_width: 72) %></pre>
 <% end %>

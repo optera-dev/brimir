@@ -5,7 +5,7 @@
 
   <div class="row collapse bb">
     <div class="medium-1 column ptl pll">
-      <%= user_avatar current_user, class: 'avatar', size: 35 %>
+      <%#<%= user_avatar current_user, class: 'avatar', size: 35 %>
     </div>
     <div class="medium-11 columns ptm pbm pll prl">
       <h3 class="text-default"><%= t(:reply) %></h3>
@@ -38,8 +38,7 @@
       </div>
 
       <%
-        if @reply.content.blank? && @reply.errors.count == 0 # not on reply error view
-
+        if @reply.content.blank?
           if current_user.prefer_plain_text?
             @reply.content = "\n#{html_to_text current_user.signature}\n"
           else
@@ -60,11 +59,7 @@
       %>
 
       <p>
-      <% if current_user.prefer_plain_text? %>
-        <%= r.text_area :content, label: false %>
-      <% else %>
-        <%= r.trix_editor :content, label: false %>
-      <% end %>
+        <%= r.text_area :content, label: false, class: ('tinymce' unless current_user.prefer_plain_text?) %>
       </p>
 
       <%= render 'attachments/form', f: r %>
@@ -87,9 +82,10 @@
       <p>
         <%= r.button t(:save_as_draft), name: 'reply[draft]', value: true, class: 'button regular radius primary' %>
 
-        <%= r.button @reply.internal? ? t(:attach_note) : t(:send_reply), name: 'reply[draft]', value: false, type: :submit, class: 'reply-submit button regular radius secondary' %>
+        <%= r.button t(:send_reply), name: 'reply[draft]', value: false, type: :submit, class: 'button regular radius secondary' %>
       </p>
 
     </div>
   </div>
 <% end %>
+

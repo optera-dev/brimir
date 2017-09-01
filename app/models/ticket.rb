@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Ticket < ApplicationRecord
+class Ticket < ActiveRecord::Base
   include CreateFromUser
   include EmailMessage
   include TicketMerge
@@ -35,13 +35,13 @@ class Ticket < ApplicationRecord
 
   has_many :status_changes, dependent: :destroy
 
-  has_and_belongs_to_many :unread_users, class_name: 'User'
-
+  #enum :status => [I18n.t('enums.status.open'),I18n.t('enums.status.closed'),I18n.t('enums.status.deleted'),I18n.t('enums.status.waiting'),I18n.t('enums.status.merged')]
   enum status: [:open, :closed, :deleted, :waiting, :merged]
-  enum priority: [:unknown, :low, :medium, :high]
+  enum :priority => [I18n.t('ticket.priority.unknown'),I18n.t('ticket.priority.low'),I18n.t('ticket.priority.medium'),I18n.t('ticket.priority.high')]
+  #enum priority: [:unknown, :low, :medium, :high]
 
   after_update :log_status_change
-  after_create :create_status_change, :create_message_id_if_blank
+  after_create :create_status_change
 
   def self.active_labels(status)
     label_ids = where(status: Ticket.statuses[status])
@@ -123,17 +123,7 @@ class Ticket < ApplicationRecord
     users = User.agents_to_notify.select do |user|
       Ability.new(user).can? :show, self
     end
-    self.notified_user_ids = users.map do |user|
-      user.id if user.is_working?
-    end
-  end
-
-  def is_unread?(user)
-    unread_users.include? user
-  end
-
-  def mark_read(user)
-    unread_users.delete user
+    self.notified_user_ids = users.map(&:id)
   end
 
   def status_times
@@ -176,40 +166,9 @@ class Ticket < ApplicationRecord
     to_email_address.try :email
   end
 
-  def self.recaptcha_keys_present?
-    !Recaptcha.configuration.site_key.blank? ||
-      !Recaptcha.configuration.secret_key.blank?
-  end
-
-  def save_with_label(label_name)
-    if label_name
-      label = Label.where(name: label_name).take
-      if label
-        self.labels << label
-        self.save
-      else
-        label = Label.new(name: label_name)
-        Ticket.transaction do
-          label.save
-          self.labels << label
-          self.save
-        end
-      end
-    else
-      self.save
-    end
-  end
-
   protected
     def create_status_change
       status_changes.create! status: self.status
-    end
-
-    def create_message_id_if_blank
-      if self.message_id.blank?
-        self.message_id = Mail::MessageIdField.new.message_id
-        self.save!
-      end
     end
 
     def log_status_change

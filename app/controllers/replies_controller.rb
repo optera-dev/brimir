@@ -29,7 +29,7 @@ class RepliesController < ApplicationController
             status: 'open',
             id: reply_params[:ticket_id]
           }
-    }.merge(reply_params.to_h))
+        }.merge(reply_params))
 
     save_reply_and_redirect
   end
@@ -87,7 +87,7 @@ class RepliesController < ApplicationController
       Rails.logger.error "Message: #{e.message}"
       Rails.logger.error "Backtrace: #{e.backtrace.join("\n")}"
       @outgoing_addresses = EmailAddress.verified.ordered
-      render 'new'
+      render action: 'new'
     end
   end
 

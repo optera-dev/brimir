@@ -1,10 +1,14 @@
 <%
   # toggle label on/off
   if params[:label_id].to_i == label.id
-    p = permitted_params.merge({ label_id: nil })
+    p = params.merge(label_id: nil)
   else
-    p = permitted_params.merge({ label_id: label.id })
+    p = params.merge(label_id: label.id)
   end
+  # remove pagination from link, start at first page
+  p.delete(:page)
+  p.delete(:controller)
+  p.delete(:action)
 %>
 <li data-edit-label-row="<%= label.id %>">
   <a href="<%= tickets_url(p) %>" class="<%= 'active ' if params[:label_id].to_i == label.id %>hover-icon-a">

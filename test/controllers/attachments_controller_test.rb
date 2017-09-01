@@ -27,24 +27,18 @@ class AttachmentsControllerTest < ActionController::TestCase
 
   test 'should get new' do
     sign_out users(:alice)
-    get :new, xhr: true
+    xhr :get, :new
     assert_response :success
   end
 
   test 'should show thumb' do
-    get :show, params: {
-      format: :thumb,
-      id: @attachment.id
-    }
+    get :show, format: :thumb, id: @attachment.id
     assert_response :success
   end
 
 
   test 'should download original' do
-    get :show, params: {
-      format: :original,
-      id: @attachment.id
-    }
+    get :show, format: :original, id: @attachment.id
     assert_response :success
   end
 

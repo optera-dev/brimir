@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # replies to tickets, made by a user, possibly with attachments
-class Reply < ApplicationRecord
+class Reply < ActiveRecord::Base
   include CreateFromUser
   include EmailMessage
   include ReplyNotifications

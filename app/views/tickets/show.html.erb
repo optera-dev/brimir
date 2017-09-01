@@ -8,7 +8,7 @@
   <div class="large-8 medium-12 columns bl br">
     <div class="row bb ptm pbm collapse">
       <div class="medium-1 column pll">
-        <%= user_avatar @ticket.user, class: 'avatar', size: 35 %>
+        <%#<%= user_avatar @ticket.user, class: 'avatar', size: 35 %>
       </div>
       <div class="medium-11 columns pll">
         <a class="pull-right mtm text-default mrl" href="#print" onclick="window.print()"><%= fa_icon 'print' %></a>
@@ -17,13 +17,6 @@
         <% end %>
         <h3 class="no-m text-default">
           <%= !@ticket.subject.blank? ? @ticket.subject : "<em>(#{t(:no_subject)})</em>".html_safe %>
-          <% if can? :update, @ticket %>
-            <small>
-              <a href="#" data-reveal-id="change-subject">
-                <span class="fa fa-fw fa-edit text-default"></span>
-              </a>
-            </small>
-          <% end %>
         </h3>
         <h5 class="text-default mb no-mt">
           <%= t(:ticket_by_at, email: link_to(@ticket.user.email, user_tickets_path(user_id: @ticket.user.id)), at: l(@ticket.created_at.in_time_zone(current_user.time_zone), format: :long)).html_safe %>
@@ -174,4 +167,3 @@
 <% end %>
 
 <%= render 'change_assignee_form', { ticket: @ticket } %>
-<%= render 'change_subject_form', { ticket: @ticket } %>
