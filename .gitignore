@@ -4,7 +4,7 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
-# Ignore database.yml e secrets.yml
+# Remove database.yml and secrets.yml from versioning
 config/database.yml
 config/secrets.yml
 

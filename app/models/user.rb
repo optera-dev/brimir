@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
   # identities for omniauth
   has_many :identities
 
-  after_initialize :default_localization
+  # after_initialize :default_localization
   before_validation :generate_password
 
   # All ldap users are agents by default, remove/comment this method if this
@@ -99,10 +99,10 @@ class User < ActiveRecord::Base
     not agent?
   end
 
-  def default_localization
-    self.time_zone = Tenant.current_tenant.default_time_zone if time_zone.blank?
-    self.locale = Tenant.current_tenant.default_locale if locale.blank?
-  end
+  # def default_localization
+  #   self.time_zone = Tenant.current_tenant.default_time_zone if self.time_zone.blank?
+  #   self.locale = Tenant.current_tenant.default_locale if self.locale.blank?
+  # end
 
   def generate_password
     if encrypted_password.blank?
