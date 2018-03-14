@@ -27,7 +27,7 @@ module Brimir
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
-    gmail_username= "victoramemiya@gmail.com"
-    gmail_password= 'qwertgigi'
+    gmail_username= "youruser@gmail.com"
+    gmail_password= 'yourpassword'
   end
 end

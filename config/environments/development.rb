@@ -14,11 +14,11 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  # config.action_mailer.raise_delivery_errors = false
 
   # Open emails in the browser.
   # https://github.com/ryanb/letter_opener
-  config.action_mailer.delivery_method = :letter_opener
+  # config.action_mailer.delivery_method = :letter_opener
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -42,19 +42,20 @@ Rails.application.configure do
 
  # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-  config.action_mailer.default_options = { from: 'sendemail@domain.com' }
+
+  config.action_mailer.default_options = { from: 'seuemail@seudominio.com.br' }
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.smtp_settings = {
-    :address    => "smtp.domain.com",
+    :address    => "smtp.suaempresa.com.br",
     :port     => 587,
-    :domain     => "domain.com",
+    :domain     => "suaempresa.com.br",
     :authentication => :login,
-    :user_name    => "sendemail@domain.com",
-    :password   => "sender.password",
+    :user_name    => "seuemail@seudominio.com.br",
+    :password   => "suaempresa",
     :enable_starttls_auto => false
   }
 end
